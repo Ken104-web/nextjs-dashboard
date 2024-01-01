@@ -6,23 +6,23 @@ import { useDebouncedCallback } from 'use-debounce';
 import { log } from 'console';
 
 export default function Search({ placeholder }: { placeholder: string }) {
-  const handleSearch = useDebouncedCallback((term) => {
-    console.log(`Searching... ${term}`);
-  })
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function HandleSearch(term: string) {
-    console.log(`Searching... ${term}`);
+  const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
+    console.log(`Searching... ${term}`);
+    params.set('page', '1');
+    
     if  (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
     replace (`${pathname}?${params.toString()}`)
-  }
+  }, 300);
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
