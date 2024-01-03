@@ -46,13 +46,12 @@ export type State = {
             };
         }
 
-        const amountInCents =amount * 100;
+        // const amountInCents =amount * 100;
         const date = new Date().toISOString().split('T')[0];
 
         try {
             await sql`
             INSERT INTO invoices (customer_id, amount, status, date)
-            VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
           `;
         } catch (erreo) {
             return {
@@ -106,7 +105,7 @@ export async function deleteInvoice(id: string) {
         return {message : 'Database Error : Failed to Delete invoice'}
     }
   }
-  
+
   export async function authenticate(
     prevState: string | undefined,
     formData: FormData,
